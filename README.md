@@ -112,6 +112,11 @@ ingest.read_from_pg_using_jdbc_driver()
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
+## Connect with Me
+
+- LinkedIn: [Ratnesh Kushwaha](http://linkedin.com/in/ratneshkushwaha/)
+- YouTube: [India Analytica](https://www.youtube.com/@IndiaAnalytica)
+
 ## Support
 
 For support, please open an issue in the GitHub repository or contact the maintainers. 
