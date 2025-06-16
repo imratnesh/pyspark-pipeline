@@ -1,0 +1,38 @@
+pwd
+
+ls
+
+wget https://raw.githubusercontent.com/futurexskill/bigdata/master/retailstore.csv
+
+ls 
+
+hadoop fs -ls
+
+hadoop fs -mkdir /user/futurexskills46
+
+hadoop fs -mkdir /user/futurexskills46/data
+
+hadoop fs -ls
+
+hadoop fs -put retailstore.csv /user/futurexskills46
+
+hadoop fs -put retailstore.csv /user/futurexskills46/data
+
+hadoop fs -ls /user/futurexskills46/data
+
+hadoop fs -ls /user/futurexskills46/
+
+touch readme.txt
+
+hadoop fs -put readme.txt 
+
+hadoop fs -put readme.txt /user/futurexskills46/data
+
+
+hadoop fs -ls /user/futurexskills46/
+
+hadoop fs -ls /user/futurexskills46/data
+
+rm retailstore.csv
+
+hadoop fs -get /user/futurexskills46/data/retailstore.csv .

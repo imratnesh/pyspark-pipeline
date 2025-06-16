@@ -1,0 +1,51 @@
+hadoop fs -ls
+
+wget https://raw.githubusercontent.com/futurexskill/bigdata/master/retailstore.csv
+
+ls
+
+hadoop fs -mkdir /user/futurexskills46/data
+
+hadoop fs -put retailstore.csv /user/futurexskills46/data
+
+
+hadoop fs -cat retailstore.csv
+
+hadoop fs -cat /user/futurexskills46/data/retailstore.csv
+
+hive
+
+dfs -ls data/
+dfs -ls /user/futurexskills46/data/
+
+
+create database if not exists futurex;
+
+show databases;
+
+use futurex;
+
+create table retailcust (age INT, salary FLOAT,gender String,country String, purchased String) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LOCATION '/user/futurexskills46/data/' TBLPROPERTIES ("skip.header.line.count"="1") ;
+
+show tables;
+
+select * from retailcust;
+
+select age, country from retailcust where salary > 20000;
+
+drop table retailcust;
+
+dfs -ls data/
+dfs -ls /user/futurexskills46/data/
+
+create external table retailcustext (age INT, salary FLOAT,gender String,country String, purchased String) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LOCATION '/user/futurexskill/data/' TBLPROPERTIES ("skip.header.line.count"="1") ;
+
+select * from retailcustext;
+
+drop table retailcustext;
+
+dfs -ls /user/futurexskills46/data/
+
+dfs -ls /user/futurexskills46/data/retailstore.csv
+
+

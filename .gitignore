@@ -1,9 +1,14 @@
-# Python
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
+
+# C extensions
 *.so
+
+# Distribution / packaging
 .Python
+env/
 build/
 develop-eggs/
 dist/
@@ -15,38 +20,51 @@ lib64/
 parts/
 sdist/
 var/
-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
 
-# Virtual Environment
-venv/
-env/
-ENV/
+# Hive and Hadoop artifacts
+metastore_db/
+*.log
+*.pid
+*.tmp
+*.hprof
+*.out
+hive.log
 
-# IDE
-.idea/
+# Logs
+logs/
+*.log
+*.out
+nohup.out
+
+# Data files
+*.csv
+*.tsv
+*.parquet
+*.orc
+*.avro
+
+# Screenshots and images
+images/
+*.png
+*.jpg
+*.jpeg
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDEs and editors
 .vscode/
+.idea/
 *.swp
 *.swo
 
-# Jupyter Notebook
-.ipynb_checkpoints
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
 
-# Spark
-spark-warehouse/
-metastore_db/
-derby.log
-
-# Logs
-*.log
-logs/
-
-# Local development
-.env
-.env.local
-
-# OS specific
-.DS_Store
-Thumbs.db 
+.venv/
+.part-*
+part-*

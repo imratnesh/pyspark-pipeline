@@ -16,14 +16,16 @@ class Ingest:
     def ingest_data(self):
         logger = logging.getLogger("Ingest")
         logger.info('Ingesting from csv')
-        #customer_df = self.spark.read.csv("retailstore.csv",header=True)
+        customer_df = self.spark.read.csv("retailstore.csv",header=True)
         course_df = self.spark.sql("select * from fxxcoursedb.fx_course_table")
         logger.info('DataFrame created')
         logger.warning('DataFrame created with warning')
         return course_df
 
     def read_from_pg(self):
-        connection = psycopg2.connect(user='postgres', password='admin', host='localhost', database='postgres')
+        logger = logging.getLogger("Ingest")
+        logger.info('read_from_pg')
+        connection = psycopg2.connect(user='postgres', password='12345678', host='localhost', database='postgres')
         cursor = connection.cursor()
         sql_query = "select * from futurexschema.futurex_course_catalog"
         pdDF = sqlio.read_sql_query(sql_query, connection)
@@ -31,13 +33,15 @@ class Ingest:
         sparkDf.show()
 
     def read_from_pg_using_jdbc_driver(self):
-
+        logger = logging.getLogger("Ingest")
+        logger.info('read_from_pg_using_jdbc_driver')
         jdbcDF = self.spark.read \
             .format("jdbc") \
             .option("url", "jdbc:postgresql://localhost:5432/postgres") \
             .option("dbtable", "futurexschema.futurex_course_catalog") \
             .option("user", "postgres") \
-            .option("password", "admin") \
+            .option("password", "12345678") \
+            .option("driver", "org.postgresql.Driver") \
             .load()
 
         jdbcDF.show()

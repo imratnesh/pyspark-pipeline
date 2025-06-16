@@ -1,0 +1,34 @@
+wget https://github.com/futurexskill/bigdata/raw/master/retailstore_5mn.zip
+ 
+unzip retailstore_5mn.zip
+
+head -10 retailstore_5mn.csv
+
+for i in {1..200}; do cp retailstore_5mn.csv "retailstore_5mn_$i.csv" ; done
+
+
+hadoop fs -mkdir /user/futurexskills46
+ 
+hadoop fs -mkdir /user/futurexskills46/retail
+hadoop fs -mkdir /user/futurexskills46/country
+
+ 
+for i in {1..200}; do hadoop fs -put "retailstore_5mn_$i.csv" retail  ; done
+ 
+
+
+hive
+
+create database futurex;
+
+use futurex;
+  
+create table retailcust (custId INT, age INT, salary FLOAT,gender String,country String) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LOCATION '/user/futurexskills46/retail/' TBLPROPERTIES ("skip.header.line.count"="1") ;
+ 
+create table countryavgsalary (country String, avg_salary double) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LOCATION '/user/futurexskills46/country/' ;
+
+insert into countryavgsalary select country,avg(salary) from retailcust group by country;
+
+select * from countryavgsalary;
+
+hive -f futurex.sql

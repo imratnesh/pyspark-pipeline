@@ -1,0 +1,24 @@
+===============================================================================================================
+================================================Hive Bucketing ===============================================
+===============================================================================================================
+===============================================================================================================
+===============================================================================================================
+
+use futurex;
+
+select count(*) from retailcustext_large ;
+
+select * from retailcustext_large limit 10;
+
+
+create external table retailcustext_large_bucketed3 (customerid INT, age INT, salary FLOAT,gender String,country String) clustered by (customerid) into 20 buckets location  '/user/futurexskills46/retailcust-bucketed3/';
+
+=========================================================
+
+hadoop fs -ls /user/futurexskills46/retailcust-bucketed3/
+=========================================================
+
+from retailcustext_large
+insert into table retailcustext_large_bucketed3
+select customerid,age,salary,gender,country;
+

@@ -1,0 +1,64 @@
+wget https://github.com/futurexskill/bigdata/raw/master/retailstore_large.zip
+
+unzip retailstore_large.zip
+
+ls -lrt
+
+hadoop fs -mkdir /user/futurexskills46
+
+hadoop fs -mkdir /user/futurexskills46/retailcust
+
+hadoop fs -put retailstore_large.csv /user/futurexskills46/retailcust
+
+==============================
+
+hive
+
+create database if not exists futurex;
+
+show databases;
+
+use futurex;
+
+create external table retailcustext_large (customerid INT, age INT, salary FLOAT,gender String,country String) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LOCATION '/user/futurexskills46/retailcust/' TBLPROPERTIES ("skip.header.line.count"="1") ;
+
+select count(*) from retailcustext_large ;
+
+select * from retailcustext_large limit 10;
+
+select count(*) from retailcustext_large where country = 'Germany';
+
+===============================================================================================================
+================================================Hive Paritioning ==============================================
+===============================================================================================================
+===============================================================================================================
+===============================================================================================================
+
+set hive.exec.dynamic.partition=true;
+
+set hive.exec.dynamic.partition.mode=nonstrict;
+
+create external table retailcustext_large_partitioned (customerid INT, age INT, salary FLOAT,gender String) partitioned by (country String) location  '/user/futurexskills46/retailcust-partitioned/';
+
+======================================
+hadoop fs -ls /user/futurexskills46/retailcust-partitioned/
+===========================================
+
+insert into table retailcustext_large_partitioned partition(country) 
+select * from retailcustext_large;
+
+=======================================
+hadoop fs -ls /user/futurexskills46/retailcust-partitioned/country=Germany
+
+
+========================================
+
+show partitions retailcustext_large_partitioned;
+
+
+select count(*) from retailcustext_large_partitioned ;
+
+select * from retailcustext_large_partitioned limit 10;
+
+select count(*) from retailcustext_large_partitioned where country = 'Germany';
+

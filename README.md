@@ -58,11 +58,16 @@ pip install -r requirements.txt
    - Ensure PostgreSQL is running on localhost:5432
    - Default credentials (modify as needed):
      - Username: postgres
-     - Password: admin
+     - Password: xxxx
      - Database: postgres
    - Create required schemas and tables:
-     - futurexschema.futurex_course_catalog
-     - fxxcoursedb.fx_course_table
+     - Use the provided SQL script to create schemas and tables:
+       ```bash
+       psql -U postgres -d postgres -f CREATE_TABLES.sql
+       ```
+     - This will create:
+       - futurexschema.futurex_course_catalog
+       - fxxcoursedb.fx_course_table
 
 2. Logging Configuration:
    - Logging settings are in `pipeline/resources/configs/logging.conf`
@@ -92,6 +97,39 @@ ingest.read_from_pg()
 ingest.read_from_pg_using_jdbc_driver()
 ```
 
+## Verification / Quickstart
+
+After installation and configuration, verify your setup:
+
+1. Check Python dependencies:
+```bash
+pip list | grep -E "pyspark|psycopg2|pandas"
+```
+
+2. Check Spark and Java installation:
+```bash
+spark-submit --version
+java -version
+```
+
+3. Check PostgreSQL connection and tables:
+```bash
+psql -U postgres -d postgres -c "\dt futurexschema.*"
+psql -U postgres -d postgres -c "\dt fxxcoursedb.*"
+```
+
+4. Run a sample pipeline ingestion (from Python shell):
+```python
+from pipeline.ingest import Ingest
+from pyspark.sql import SparkSession
+spark = SparkSession.builder.appName("Pipeline").getOrCreate()
+ingest = Ingest(spark)
+df = ingest.ingest_data()
+print(df.show())
+```
+
+If you see a DataFrame output, your setup is correct!
+
 ## Development
 
 - Follow PEP 8 style guide for Python code
@@ -108,6 +146,17 @@ ingest.read_from_pg_using_jdbc_driver()
 4. Push to the branch
 5. Create a Pull Request
 
+
+## Screenshots
+
+### Screenshot 1: HiveServer2 Web UI or Beeline Connection
+
+![Screenshot 1 - TODO: Insert HiveServer2 Web UI or Beeline Connection image here](txt_commands/hadoop_ui.png)
+
+### Screenshot 2: Hive Query Result Example
+
+![Screenshot 2 - TODO: Insert Hive Query Result Example image here](txt_commands/hive_ui.png)
+
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
@@ -118,5 +167,5 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - YouTube: [India Analytica](https://www.youtube.com/@IndiaAnalytica)
 
 ## Support
-
+[REF](https://github.com/futurexskill/bigdata)
 For support, please open an issue in the GitHub repository or contact the maintainers. 

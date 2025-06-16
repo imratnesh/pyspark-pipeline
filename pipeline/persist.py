@@ -30,7 +30,7 @@ class Persist:
             .option("url", "jdbc:postgresql://localhost:5432/postgres")\
             .option("dbtable", target_table)\
             .option("user", "postgres")\
-            .option("password", "admin")\
+            .option("password", "12345678")\
             .save()
 
         except Exception as exp:
@@ -39,7 +39,7 @@ class Persist:
             # send an email notification
             raise Exception("HDFS directory already exists")
     def insert_into_pg(self):
-        connection = psycopg2.connect(user='postgres', password='admin', host='localhost', database='postgres')
+        connection = psycopg2.connect(user='postgres', password='12345678', host='localhost', database='postgres')
         cursor = connection.cursor()
         insert_query="INSERT INTO futurexschema.futurex_course_catalog (course_id, course_name, author_name, course_section, creation_date) VALUES (%s, %s, %s, %s,%s)"
         insert_tuple = (3,'Machine Learning','FutureX','{}', '2020-10-20')
